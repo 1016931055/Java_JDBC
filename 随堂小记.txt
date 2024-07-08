@@ -1,0 +1,121 @@
+jdbc技术，是一个过渡技术（后面使用mybatis）
+
+mybatis技术底层还是jdbc（mybatis把jdbc封装了）
+
+
+byte[] buf = new byte[1024];
+int len = -1;
+while((字节输入流.read(buf)) != -1){
+    字节输出流.write( buf , 0 , len);
+}
+
+
+jdbc和io流中的文件复制类似，也是在固定格式的模板
+
+
+jdbc ： java数据库连接技术 （使用java语言编写程序，来操作数据库）
+
+
+jdbc操作数据库的模板代码步骤：
+0 ：工程下导入数据库驱动文件
+1 ：注册驱动
+    Class.for("com.mysql.jdbc.Driver"); //加载Driver类
+2 ：连接数据库
+    Connection conn = DriverManager.getConnection("数据库连接字符串", "数据库登录名" ,"密码");
+3 ：编写SQL语句
+    String sql="..........";
+4 ：把SQL语句发送给数据库（数据库执行SQL，并返回执行结果）
+    Statement stmt = conn.createStatement(); //创建数据库操作对象
+                        //使用数据库操作对象，发送SQL语句
+
+    int row = stmt.executeUpdate(sql);//执行DML语句、DDL语句
+              //执行DML语句时，执行后返回受影响的行数     受影响行数为0表示增、删、改没有成功
+              //执行DDL语句，执行后返回0表示成功
+
+
+    ResultSet rs = stmt.executeQuery(sql); //执行DQL语句 （查询）
+               //执行DQL语句时，执行后返回的是结果集对象（封装查询的数据表结果）
+
+5 ：处理SQL语句执行结果
+     //处理DML语句执行结果
+     if(row>0){
+           增、删、改 数据成功
+     }
+
+     //处理DQL语句执行结果（查询结果封装在ResultSet对象）
+6 ：释放资源
+
+
+Connection：
+|- 是一个接口
+|- 作为数据库连接对象
+|- 作用：  1、创建数据库操作对象    2、管理事务
+   conn.setAutoCommit(false); //相当于MySQL中的 ： start transaction;
+   conn.commit();             //相当于mysql中的： commit
+   conn.rollback();            // rollback
+
+
+已学习的SQL语句：
+|-- DDL （建库、建表）
+|-- DML （增、删、改）
+|-- DQL （查询）
+
+
+Statement
+|-- 操作数据库的对象
+|-- 存在SQL注入风险
+
+解决Statement对象中存在的SQL注入风险：使用Statement子接口 PreparedStatement
+
+//创建PreparedStatement对象   【预编译SQL对象】
+PreparedStatement  pstmt = 数据库连接对象.prepareStatement( sql语句 );
+
+
+Java程序：
+  String sql="select * from user where username=? and pasword=?";//?是占位符（先占个位置，没有值）
+  把sql语句先发给数据库
+  给?占位符，赋值：   1,"aaa"     2,"aaa' or 1=1-- "
+
+
+数据库：
+  接收到java程序发送的sql语句：
+     String sql="select * from user where username=? and pasword=?"
+  预编译：检查sql的基本语法
+  接收占位符数据：
+     第1个?占位符： select * from user where username='aaa'
+     第2个?占位符：String sql="select * from user where username='aaa' and pasword='aaa\\' or 1=1\\-- '"
+                                                                                  作为字符串（关键字屏蔽）
+
+
+开发中常用的三层架构模型：
+- web层： 接收客户端发送的数据 -> 把接收的数据封装为对象 -> 调用service层方法(并传递数据对象) -> 根据service层方法执行结果，给客户端回馈
+- service层：处理业务逻辑（会调用dao层中的方法）
+- dao层：和数据库交互（底层利用jdbc技术）
+
+在开发中三层架构模型通常的命名：
+web层：     com.itheima.web
+service层： com.itheima.service
+dao层：     com.itheima.dao
+
+
+
+数据库连接池技术解决什么问题？
+1. 提高程序的执行效率
+2. 节省资源（不用频繁的创建和销毁Connection）
+
+java语言基于连接池，制定标准： javax.sql.DataSource接口
+第三方组织，按照DataSource接口中制定的标准，实现数据库连接池功能
+例：Druid
+
+数据库连接池的使用：
+1、创建数据库连接池对象
+DataSource  ds = DruidDataSourceFactory.createDataSource( Properites对象  );
+
+2、从数据库连接池中，获取一个Connection
+Connection conn = ds.getConnection();
+
+3、基于Connection对象，创建数据库执行对象
+
+4、执行sql语句
+
+5、.....
