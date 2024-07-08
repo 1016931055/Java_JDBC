@@ -1,4 +1,4 @@
-package com.itheima.jdbc.example.web;
+package com.jdbc.example.web;
 
 
 import com.jdbc.example.pojo.User;
