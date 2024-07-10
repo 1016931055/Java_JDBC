@@ -1,4 +1,4 @@
-package com.itheima.junit;
+package com.junit;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

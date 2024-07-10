@@ -1,4 +1,4 @@
-package com.itheima.junit;
+package com.junit;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

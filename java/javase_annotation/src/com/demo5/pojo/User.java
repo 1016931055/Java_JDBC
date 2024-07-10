@@ -1,4 +1,4 @@
-package com.itheima.demo5.pojo;
+package com.demo5.pojo;
 
 public class User {
     private Integer id;

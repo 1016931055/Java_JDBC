@@ -1,6 +1,6 @@
-package com.itheima.demo5.dao;
+package com.demo5.dao;
 
-import com.itheima.demo5.pojo.User;
+import com.demo5.pojo.User;
 
 import java.util.ArrayList;
 import java.util.List;

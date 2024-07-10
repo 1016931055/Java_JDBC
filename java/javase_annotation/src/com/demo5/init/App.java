@@ -1,7 +1,7 @@
-package com.itheima.demo5.init;
+package com.demo5.init;
 
-import com.itheima.demo5.dao.UserDao;
-import com.itheima.demo5.service.UserService;
+import com.demo5.dao.UserDao;
+import com.demo5.service.UserService;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

@@ -1,4 +1,4 @@
-package com.itheima.junit;
+package com.junit;
 
 public class JunitDemo {
 

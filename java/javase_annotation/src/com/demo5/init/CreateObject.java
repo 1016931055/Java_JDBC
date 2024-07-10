@@ -1,4 +1,4 @@
-package com.itheima.demo5.init;
+package com.demo5.init;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

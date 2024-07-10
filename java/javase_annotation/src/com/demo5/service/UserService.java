@@ -1,9 +1,9 @@
-package com.itheima.demo5.service;
+package com.demo5.service;
 
 
-import com.itheima.demo5.dao.UserDao;
-import com.itheima.demo5.init.CreateObject;
-import com.itheima.demo5.pojo.User;
+import com.demo5.dao.UserDao;
+import com.demo5.init.CreateObject;
+import com.demo5.pojo.User;
 
 import java.util.List;
 
@@ -17,7 +17,6 @@ public class UserService {
 
     public List<User> queryAllUser(){
         //调用UserDao对象中的方法
-
 
         List<User> userList = userDao.findAllUser();
 
