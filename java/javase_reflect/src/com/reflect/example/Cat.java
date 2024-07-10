@@ -1,4 +1,4 @@
-package com.itheima.reflect.example;
+package com.reflect.example;
 
 public class Cat {
     public void eat(){
