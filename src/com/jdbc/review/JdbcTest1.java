@@ -38,7 +38,7 @@ public class JdbcTest1 {
     //修改数据
     @Test
     public void testUpdate() {
-
+        // 使用jdbc工具类简化流程
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
@@ -93,6 +93,7 @@ public class JdbcTest1 {
         if (rowCount > 0) {
             System.out.println("数据删除成功!");
         }
+
         //释放资源
         JdbcUtil.close(con, pstmt);
     }

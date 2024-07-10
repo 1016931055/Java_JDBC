@@ -21,7 +21,7 @@ public class UserDao {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            //数据库连接
+            //数据库连接(通过JdbcUtil)
             conn = JdbcUtil.getConnection();
             //编写SQL代码
             String sql = "select id,username,password from user where username=? and password=?";
@@ -59,7 +59,6 @@ public class UserDao {
 
     //查询所有用户
     public List<User> findAllUser() {
-
         return null;
     }
 

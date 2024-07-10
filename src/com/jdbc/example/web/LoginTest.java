@@ -8,7 +8,6 @@ import org.junit.Test;
 //web层： 接收客户端发送的数据 -> 数据封装为对象 -> 调用service层方法 ->基于service层方法执行结果给客户回馈
 //模拟：web层
 public class LoginTest {
-
     @Test
     public void login() {
         //模拟：客户端发送过来的数据

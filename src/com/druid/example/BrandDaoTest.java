@@ -17,13 +17,9 @@ public class BrandDaoTest {
             System.out.println(brand);
         }
     }
-
-
-
     //添加
 
     //修改
 
     //删除
-
 }

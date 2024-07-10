@@ -19,7 +19,7 @@ public class JdbcQuickStart {
         //|- 作用：  1、创建数据库操作(执行SQL的)对象    2、管理事务
         //   conn.setAutoCommit(false); //相当于MySQL中的： start transaction;
         //   conn.commit();             //相当于mysql中的： commit
-        //   conn.rollback();            // rollback
+        //   conn.rollback();           // rollback
         Connection conn = DriverManager.getConnection(url, "root", "");
 
         // 3、编写SQL语句

@@ -1,0 +1,15 @@
+package com.reflect.field_反射获取成员变量;
+
+public class Teacher {
+    //私有
+    private String name;
+    //默认
+    int age;
+    //受保护
+    protected String gender;
+    //公开
+    public int id;
+
+    public Teacher() {
+    }
+}
