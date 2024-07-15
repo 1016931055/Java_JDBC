@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- 根元素 -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.itheima.com"
+        elementFormDefault="qualified">
+
+    <!-- Schema约束把元素分为两类：
+         1、简单元素 ： 没有子元素，仅有文本内容
+         2、复杂元素 :  带有子元素
+     -->
+
+    <!-- 设置XML文档中的根元素 -->
+    <element name='书架'>
+
+        <!-- complexType : 复杂元素 -->
+        <complexType>
+            <!-- sequence : 表示按照顺序 -->
+            <sequence maxOccurs='unbounded'>
+                <element name='书'>
+                    <complexType>
+                        <sequence>
+                            <element name='书名' type="string"/>
+                            <element name='作者' type="string"/>
+                            <element name='售价' type="double"/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+
+        </complexType>
+    </element>
+
+</schema>

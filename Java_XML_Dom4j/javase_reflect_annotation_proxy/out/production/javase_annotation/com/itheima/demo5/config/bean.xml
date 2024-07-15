@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans>
+
+    <beand id="userDao" class="com.itheima.demo5.dao.UserDao"></beand>
+
+    <beand id="userService" class="com.itheima.demo5.service.UserService"></beand>
+
+</beans>

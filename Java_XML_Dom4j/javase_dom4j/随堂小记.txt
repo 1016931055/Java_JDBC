@@ -1,0 +1,138 @@
+XML技术（框架中有在使用） ：  只要看得懂、会修改即可
+XML解析（使用java程序读取xml内容） ： 听懂解析逻辑（开发中不需要自己手动书写代码解析XML文件）
+综合案例：模拟简易版mybatis框架技术 （要使用技术：反射、注解、XML解析、动态代理、java基础知识）   听明白即可
+
+
+XML文件的组成：
+1、注释
+2、声明  ： 第1行的固定格式    <?xml version="1.0" encoding="UTF-8" ?>
+3、元素(标签、标记)
+4、属性
+5、转义字符
+6、字符区
+
+
+XML : 可扩展的标记语言
+|--- 可扩展 ： 可以自由定义标签（随意）
+
+
+XML约束：限制XML文件中可以书写的内容（必须按照限制书写内容，不能随意编写了）
+1、DTD
+2、Schema
+
+
+
+
+
+
+动态代理解决程序中的什么问题？
+  当程序中某个类(某些类)的方法需要增强，此时又不能对源代码进行修改，就可以使用动态代理
+  举例： List集合中有一个remove(元素名)方法
+        remove()方法，只能删除集合中指定名称的一个元素 （仅删除一个）
+        如果List集合中存储的多个相同元素，都要删除怎么办？
+        方案1：循环List集合，遍历删除
+        方案2：动态代理
+            List list = (List) Proxy.newProxyInstance(
+                    List.class.getClassLoader(), //类加载器：加载Proxy动态生成的.class文件(子类)
+                    ArrayList.class.getInterfaces(), //所有的父接口   Class数组形式
+                    new InvocationHander(){
+                        //重写invoke方法
+
+                        ......删除所有的指定元素
+                    }
+              );
+              list.remove(相同的元素);//删除指定的全部元素
+
+动态代理的使用
+   Proxy类
+   static Object newProxyInstance( 类加载器, Class类型的父接口[] , 处理器  )
+
+   处理器：InvocationHander接口
+          new InvocationHandler(){
+              public Object invoke(Object proxy , Method method , Object[] args ){
+                 //Object proxy  ： 代理对象自身(不使用)
+
+                 //Method  method : 被代理类中要增强的方法对象 （处理器作用：代理对象在调用方法时，被处理器拦截了方法执行）
+
+                 //Object[]  args  : 所拦截方法中的需要的参数
+              }
+          }
+
+
+
+XML： 可扩展的标记语言
+      xml文档的缀名名 ： .xml
+      xml文件全部都是由标签组成的
+      xml文件中可以的书写的内容：
+      1、注释
+      2、声明 （要求：必须书写在xml文档中的第1行位置上，固定格式）
+      3、元素（标签、标记）
+      4、属性 ：书写标签上的 、 属性可以有多个，但不能重复名称的属性、 属性以key/value体现
+      5、转义字符 ：xml中有一个字符作为了关键字使用了，当在xml中要体现这些关键字，需要使用转义字符代替
+      6、字符区 ： 书写在字符区中的内容，全部原样显示
+
+通常在开发中使用：xml约束，来限制xml文件中书写的内容
+xml约束：
+1、dtd
+2、schema
+   schema约束，本身就是一个xml文件
+   schema约束文件，后缀名是：.xsd
+   schema为了防止相同的元素名或属性名，提供了"名称空间"来区分不同名称空间下的元素或属性
+         例： xmlns:别名 = "域名"
+             <别名:元素名 > </别名:元素名>
+
+
+
+
+
+
+
+xml的作用：
+1、存储数据 （过时）
+2、配置文件（主流）
+
+
+在xml文件中书写的配置信息，需要通过IO流读取并解析出来。
+
+
+
+
+
+Dom4j工作原理：
+     把整个xml文件读取到内存中，并基于xml文件结构生成一个树结构（dom树），在生成dom树后会创建Document对象
+     利用Document对象就可以对dom树中的内容进行操作（读、写）
+
+
+Dom4j的使用步骤：
+1、把dom4j.jar文件导入到项目工程下，并添加项目库中
+2、使用dom4j提供的核心类：SaxReader，加载xml文件并创建Document对象 （dom树模型就存在了）
+3、利用document对象，获取到dom树模型中的根元素
+      Element  rootElement =  document.getRootElement()
+4、从根元素，可以获取其下的子元素
+      List<Element> 所有的子元素对象 = rootElement.elements("子元素的名字");
+      Element  第1个子元素对象 = rootElement.element("子元素名字");
+      通过子元素，可以获取其下的子元素
+      通过子元素，可以获取其下的文本内容
+          String text  = element对象.getText(); //获取当前元素对象下的文本内容
+          String text  = 父元素对象.elementText("子元素名字");
+
+
+      //获取元素的名字
+      String name = element对象.getName();
+      //获取元素上的属性值
+      String value = element对象.attributeValue("属性名");
+
+
+
+XML解析的方式：XPath
+|--- 底层还是基于Dom4j （把Dom4j进行二次封装）
+|--- 使用"路径表达式"来解析XML文件
+        绝对路径表达式 :  /根元素/子元素/子子元素/...
+        相对路径表达式 :  子元素/子子元素/...  (拿某个元素作为参照)
+        全文搜索路径表达式 :  //元素//子元素  （在整个xml文档中检索）     例：  //name
+        条件筛选表达表 :  //元素[@属性]   例： //book[@id]
+
+
+
+
+

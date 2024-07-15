@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: lib/mysql-connector-java-5.1.37-bin.jar lib/c3p0-0.9.5.2.jar
+  lib/dom4j-2.1.1.jar lib/jaxen-1.1.2.jar lib/mchange-commons-java-0.2.1
+ 2.jar
+

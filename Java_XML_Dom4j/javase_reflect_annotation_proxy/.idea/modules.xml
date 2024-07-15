@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/javase_annotation/javase_annotation.iml" filepath="$PROJECT_DIR$/javase_annotation/javase_annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javase_jdbc-review/javase_jdbc-review.iml" filepath="$PROJECT_DIR$/javase_jdbc-review/javase_jdbc-review.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javase_proxy/javase_proxy.iml" filepath="$PROJECT_DIR$/javase_proxy/javase_proxy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javase_reflect/javase_reflect.iml" filepath="$PROJECT_DIR$/javase_reflect/javase_reflect.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?><!-- 第1行是固定格式（不能改变）-->
+<!--根标签 : 在一个XML文档中有且只能存在一个根标签 -->
+<persons>
+    <person id="it001"><!--开始标签-->
+        <name>张三</name>
+        <age>21</age>
+        <gender>男</gender>
+    </person><!--结束标签-->
+
+
+    <person id="it002">
+        <name>张三</name>
+        <age>21</age>
+        <gender>
+            <![CDATA[
+                     <"男">
+            ]]>
+        </gender>
+    </person>
+
+</persons>
+
+

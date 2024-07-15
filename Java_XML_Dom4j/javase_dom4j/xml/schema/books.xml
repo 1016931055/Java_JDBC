@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--要引入Schema约束-->
+<书架 xmlns="http://www.itheima.com"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.itheima.com  bookshelf.xsd"
+>
+    <书>
+        <书名>JavaWeb开发教程</书名>
+        <作者>张孝祥</作者>
+        <售价>100.00</售价>
+    </书>
+
+    <书>
+        <书名>三国演义</书名>
+        <作者>罗贯中</作者>
+        <售价>100.00</售价><!-- dtd的短板：无法约束文本内容的类型     解决方案：使用scheam约束 -->
+    </书>
+</书架>
