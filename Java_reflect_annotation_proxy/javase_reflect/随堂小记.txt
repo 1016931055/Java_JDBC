@@ -1,0 +1,141 @@
+类加载器：
+  加载磁盘上的.class文件到内存中，并创建Class对象（基于.class文件创建）
+
+Class对象：存储的是.class文件中书写的内容（成员变量、成员方法、构造方法）
+
+
+类加载器的分类：
+1、启动类加载器 ：加载java运行环境中核心类库 （例： Object）
+2、扩展类加载器 : 加载java运行环境中提供的扩展类库下内容 （扩展类：lib/ext目录）
+3、应用程序类加载器： 加载程序员自己定义的类（例：Student、Teacher）
+
+
+在Class类中，提供了获取类加载器对象的API方法：
+public ClassLoader  getClassLoader();   //启动类加载器对象为：null
+
+
+类加载器的应用： 加载配置文件并生成字节输入流
+InputStream  getResourceAsStream("关联配置文件");
+//结合Properties对象使用
+Properties prop = new Properties();
+prop.load(  类加载器对象.getResourceAsStream("关联的配置文件")   ) //把配置文件中配置的参数(key=value)，存储到Properties对象中
+
+
+
+反射 + 注解 + 动态代理 + 配置文件  ==> 开发框架（例：Mybatis、Spring）
+
+
+反射：
+|-- 是针对Class对象进行操作的
+|-- 是一种类的解剖技术（.class文件中书写有：构造、成员变量、成员方法）
+     反射，就可以获取.class文件中的构造、成员变量、成员方法
+     获取到构造器了，可以做什么？  创建对象
+     获取成员方法了，可以做什么？  可以调用方法执行
+     获取成员变量了，可以做什么？  赋值、取值
+反射技术的关键实现要素： Class对象
+   利用Class对象，来获取到：构造器、成员方法、成员变量
+
+
+
+获取Class对象有三种方式：
+1、    Class  cls =  类名.class    //当在方法区中创建了.class文件的Class对象后，就可以使用：   类名.class
+
+2、    Class  cls =  Class.forName("类的全限定名[带有包名的类]");  //类的全限定名： com.mysql.jdbc.Driver
+       //要使用 ： Driver类
+                 导入包：com.mysql.jdbc.Driver;
+                 编写代码： Drvier driver = new Driver(); //在编写代码时，就要求Driver必须存在了（如果Driver类不存在，代码报错）
+
+                 Class.forName("com.mysql.jdbc.Driver");//编写代码时，不要求Driver类必须存在（不存在也不会报错）
+
+3、   Class  cls = 对象名.getClass()  //在创建具体的对象后，通常对象名获取Class对象
+
+
+Class类中的API方法：
+|-- 获取到public修饰的无参构造器
+    Constructor cons = Class对象.getConstructor();
+
+
+Constructor类中的API方法：
+|-- 通过构造方法创建对象
+    Object  newInstance(T... args);
+
+
+回顾上午内容：
+1. 类加载器 ：是java运行环境（JRE）中的一部分，用来加载.class文件
+       作用：把磁盘上的.class文件加载到内存中，并创建Class对象
+       分类：
+          1、启动类加载器
+          2、扩展类加载器
+          3、应用程序类加载器 ： 加载程序员自定义的类
+       使用：
+           //获取类加载器
+           ClassLoader  cl = Class对象.getClassLoader();
+           //利用类加载器中的API，加载配置文件，并生成字节输入流
+           InputStream  is = 类加载器对象.getResourceAsStream("存放在src目录下的配置文件");
+           可以结合Properties对象实现配置文件加载
+
+
+2. 反射 ： 针对类进行解剖的技术（解剖出类的：成员变量、成员方法、构造方法）
+        反射的关键要素：Class对象
+        获取Class对象的方式：
+           Class cls = 类名.class;
+           Class cls = 对象名.getClass();
+           Class cls = Class.forName("类的全限定名");
+        利用Class对象中提供的API方法，分别获取到：构造器、成员变量、成员方法
+           //获取public修饰的无参构造器
+           Constructor  cons1 = Class对象.getConstructor();
+           //获取public修饰的带有String和int类型的有参构造器
+           Constructor  cons2 = Class对象.getConstructor( String.class , int.class );
+           //获取private修饰的带有String类型的有参构造器
+           Constructor<User>  cons3 = Class对象.getDeclaredConstructor( String.class );
+
+        利用构造器创建对象:
+           Object obj = cons1.newInstance();//利用无参构造方法创建对象
+           User user = (User)cons2.newInstance("熊大",23);//利用String、int类型参数的构造方法，创建对象
+
+           //针对private修饰的构造器，需要先取消权限检查
+           cons3.setAccessible(true);//true表示取消权限检查
+           User user = cons3.newInstance("熊大");
+
+
+反射技术 ： 成员方法
+1. 获取Class对象 （有三种获取方式）
+2. 基于Class对象，获取成员方法对象（Method）
+      Method m = Class对象.getMethod("方法名" , 方法参数类型);
+3. 通过Method对象，运行方法   //成员方法，也称为：实例方法（通常对象名调用的方法）
+      Object returnResult  = Method对象.invoke(实例对象 , 方法的实参... )
+
+
+
+
+注解： 单独使用没有任何意义，通常会结合反射技术一起使用。
+
+
+@Table(value="tb_user") //从数据表tb_user中读取数据
+public class User{
+   @Column(value="username") //把tb_user表中username字段下的数据，赋值给name成员变量
+   private String name;
+
+   private Integer age;
+}
+
+注解可以书写在哪些地方？
+类|接口|自定义注解 、构造器 、成员方法 、成员变量 、参数
+
+被注解标注的内容，可以实现一些特殊的作用（具体的作用以实现开发中的需求为准）
+
+
+元注解： 书写在自定义注解上的注解（JDK提供的）
+常用的元注解：
+|-- @Target     限定自定义注解书写的位置
+                使用ElementType枚举类设置书写的位置
+                常用的枚举项： TYPE（类、接口）  、 METHOD（方法）
+
+|-- @Retention  设置自定义注解的生命周期
+                RetentionPolicy枚举类设置生命周期（存活范围）
+                枚举值： SOURCE 、CLASS（默认值）、 RUNTIME
+    注意：希望注解能够在程序运行时进行解析，就必须设置生命周期为：RUNTIME
+
+注解解析：
+1. 判断某个位置上是否存在自定义注解
+2. 存在 ： 对自定义注解进行解析
